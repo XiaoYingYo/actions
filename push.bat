@@ -6,4 +6,5 @@ cd %driveLetter%:
 cd "%currentDirectory%"
 chcp 65001
 
+copy /Y D:\@Development_Engineering\Java\githubActions\target\githubActions.jar .
 git status && git add . && git commit --allow-empty-message -m "" && git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v --set-upstream origin main:main
