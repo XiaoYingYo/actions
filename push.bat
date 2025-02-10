@@ -1,0 +1,1 @@
+git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v --set-upstream origin main:main
