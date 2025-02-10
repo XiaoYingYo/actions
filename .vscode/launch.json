@@ -2,14 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "提交到Github",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceFolder}/push.bat",
-            "console": "integratedTerminal",
-            "skipFiles": [
-                "<node_internals>/**"
-            ]
-        }
+            "type": "node-terminal",
+            "name": "Push",
+            "cwd": "${workspaceRoot}",
+            "command": "node --version",
+            "preLaunchTask": "Push"
+        },
     ]
 }
