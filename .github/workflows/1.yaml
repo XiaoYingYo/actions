@@ -18,4 +18,4 @@ jobs:
           distribution: "temurin"
 
       - name: Run Java Application
-        run: java -jar App.jar
+        run: java -jar githubActions.jar
