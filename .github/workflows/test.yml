@@ -45,8 +45,7 @@ jobs:
 
       - name: 运行文件管理器
         run: |
-          # Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
-          npm run start
+          Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
         shell: powershell
         working-directory: ./filecat
 
