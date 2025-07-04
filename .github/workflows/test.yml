@@ -73,8 +73,6 @@ jobs:
           $policy = New-WBPolicy
           $volume = Get-WBVolume -VolumePath "C:\"
           Add-WBVolume -Policy $policy -Volume $volume
-          $exclusions = New-WBFileSpec -FilePath "C:\Downloads", "C:\TempFiles"
-          Add-WBFileSpec -Policy $policy -FileSpec $exclusions -Exclude
           $target = New-WBBackupTarget -VolumePath "D:\"
           Add-WBBackupTarget -Policy $policy -Target $target
           Start-WBBackup -Policy $policy -Verbose
