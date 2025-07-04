@@ -62,6 +62,7 @@ jobs:
 
       - name: 输出 tunnelmole 日志
         run: |
+          Start-Sleep -Seconds 2
           Get-Content -Path "tmole.log"
         shell: powershell
 
