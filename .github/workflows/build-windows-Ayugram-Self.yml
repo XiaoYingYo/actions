@@ -1,4 +1,4 @@
-name: 编译 Ayugram
+name: 编译 Ayugram Self
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: self-hosted
     steps:
       - name: 检出仓库
         run: |
