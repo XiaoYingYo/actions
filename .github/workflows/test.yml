@@ -41,7 +41,6 @@ jobs:
 
       - name: 运行文件管理器
         run: |
-          # Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
           cmd /c "start /b npm run start > filecat.log 2>&1"
         shell: powershell
         working-directory: ./filecat
@@ -57,7 +56,6 @@ jobs:
       - name: 启动 tunnelmole
         run: |
           curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
-          # Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
         shell: powershell
 
