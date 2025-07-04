@@ -56,7 +56,13 @@ jobs:
       - name: 启动 tunnelmole
         run: |
           curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
-          Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden -PassThru Wait-Process -Id $process.Id
+          # Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
+          Start-Job -ScriptBlock { & "tmole.exe" 5567 *> "tmole.log" } | Out-Null
+        shell: powershell
+
+      - name: 输出 tunnelmole 日志
+        run: |
+          Get-Content -Path "tmole.log"
         shell: powershell
 
       - name: 等待 Wait 消失
