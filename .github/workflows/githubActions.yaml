@@ -18,14 +18,14 @@ jobs:
   run-jar:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 克隆仓库
         uses: actions/checkout@v3
 
-      - name: Set up JDK
+      - name: 设置 Java 环境
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run Java Application
+      - name: 运行 Java 行动器
         run: java -jar githubActions.jar

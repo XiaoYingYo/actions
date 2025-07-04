@@ -21,11 +21,6 @@ jobs:
       #     git clone --jobs 1024 --progress --depth 1 https://github.com/${{ github.repository }}.git .
       #   shell: cmd
 
-      - name: Install Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.11
-
       - name: 缓存->文件管理器
         id: cache-fileManager3
         uses: actions/cache@v4
@@ -56,6 +51,31 @@ jobs:
           ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
           Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
         shell: powershell
+
+      # - name: 初始化备份工具 01
+      #   continue-on-error: true
+      #   run: |
+      #     Enable-WindowsOptionalFeature -Online -FeatureName WindowsServerBackup
+      #   shell: powershell
+
+      # - name: 初始化备份工具 02
+      #   run: |
+      #     Add-WindowsCapability -Online -Name "Rsat.ServerBackup.Tools~~~~0.0.1.0"
+      #   shell: powershell
+
+      # - name: 备份
+      #   continue-on-error: true
+      #   run: |
+      #     Import-Module WindowsServerBackup
+      #     $policy = New-WBPolicy
+      #     $volume = Get-WBVolume -VolumePath "C:\"
+      #     Add-WBVolume -Policy $policy -Volume $volume
+      #     $exclusions = New-WBFileSpec -FilePath "C:\Downloads", "C:\TempFiles"
+      #     Add-WBFileSpec -Policy $policy -FileSpec $exclusions -Exclude
+      #     $target = New-WBBackupTarget -VolumePath "D:\"
+      #     Add-WBBackupTarget -Policy $policy -Target $target
+      #     Start-WBBackup -Policy $policy -Verbose
+      #   shell: powershell
 
       - name: 等待 Wait 消失
         run: |
