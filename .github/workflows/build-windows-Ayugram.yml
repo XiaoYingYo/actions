@@ -38,12 +38,12 @@ jobs:
         shell: powershell
         working-directory: ./app/filecat
 
-      # - name: 启动 ngrok
-      #   run: |
-      #     choco install ngrok
-      #     ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
-      #     Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
-      #   shell: powershell
+      - name: 启动 ngrok
+        run: |
+          choco install ngrok
+          ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
+          Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
+        shell: powershell
 
       - name: 启动 tunnelmole
         run: |
