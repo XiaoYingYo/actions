@@ -57,11 +57,7 @@ jobs:
         run: |
           curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
           # Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
-          Start-Job -ScriptBlock {
-            $exePath = Join-Path $using:PWD "tmole.exe"
-            $logPath = Join-Path $using:PWD "tmole.log"
-            & $exePath 5567 *> $logPath
-          } | Out-Null
+          Start-Process -FilePath ".\tmole.exe" -ArgumentList "5567" -RedirectStandardOutput "tmole.log" -RedirectStandardError "tmole.log" -NoNewWindow
         shell: powershell
 
       - name: 输出 tunnelmole 日志
