@@ -53,6 +53,12 @@ jobs:
           # Start-Process -FilePath "frpc.exe" -ArgumentList "-c frpc.toml" -WindowStyle Hidden
         shell: powershell
 
+      - name: 启动 tunnelmole
+        run: |
+          curl -O https://tunnelmole.com/downloads/tmole.exe
+          Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
+        shell: powershell
+
       # - name: 初始化备份工具 01
       #   continue-on-error: true
       #   run: |

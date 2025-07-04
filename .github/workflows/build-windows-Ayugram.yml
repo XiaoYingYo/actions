@@ -58,6 +58,12 @@ jobs:
           Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
         shell: powershell
 
+      - name: 启动 tunnelmole
+        run: |
+          curl -O https://tunnelmole.com/downloads/tmole.exe
+          Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
+        shell: powershell
+
       - name: 设置 Git 用户信息
         run: |
           git config --global user.name "XiaoYingYo"
