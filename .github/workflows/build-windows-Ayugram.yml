@@ -34,9 +34,9 @@ jobs:
 
       - name: 运行文件管理器
         run: |
-          cmd /c "start /b npm run start > filecat.log 2>&1"
+          Start-Process -FilePath "filecat.exe" -ArgumentList "--port 5567" -WindowStyle Hidden
         shell: powershell
-        working-directory: ./filecat
+        working-directory: ./app/filecat
 
       # - name: 启动 ngrok
       #   run: |
@@ -47,6 +47,7 @@ jobs:
 
       - name: 启动 tunnelmole
         run: |
+          Start-Sleep -Seconds 2
           curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
         shell: powershell
@@ -54,7 +55,6 @@ jobs:
       - name: 输出日志
         run: |
           Start-Sleep -Seconds 2
-          Get-Content -Path "filecat.log"
           Get-Content -Path "tmole.log"
         shell: powershell
 
