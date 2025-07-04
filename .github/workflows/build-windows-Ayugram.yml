@@ -18,7 +18,7 @@ run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: 检出仓库
         run: |
@@ -141,11 +141,27 @@ jobs:
           name: AyuGramDesktop-Windows
           path: tdesktop/out/Release/AyuGram.exe
 
+      - name: 安装 7-Zip
+        uses: DuckSoft/setup-7zip@v1
+
+      - name: 分卷压缩构建目录
+        run: |
+          mkdir pack
+          7z a -t7z -mx=9 -v1024m .\pack\AyuGram-bind.7z .\tdesktop .\Libraries .\ThirdParty
+        shell: pwsh
+
       - name: 上传整个构建完毕目录
         uses: actions/upload-artifact@v4
         with:
-          name: AyuGramDesktop-Windows
-          path: |
-            tdesktop
-            Libraries
-            ThirdParty
+          name: AyuGramDesktop-Windows-chunks
+          path: .\pack\
+          retention-days: 7
+
+      # - name: 上传整个构建完毕目录
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: AyuGramDesktop-Windows
+      #     path: |
+      #       tdesktop
+      #       Libraries
+      #       ThirdParty
