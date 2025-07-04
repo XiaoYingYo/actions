@@ -128,6 +128,12 @@ jobs:
           .\configure.bat x64 -D TDESKTOP_API_ID=2040 -D TDESKTOP_API_HASH=b18441a1ff607e10a989891a5462e627
         shell: cmd
 
+      - name: 启用长路径支持
+        run: |
+          git config --system core.longpaths true
+          New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+        shell: pwsh
+
       - name: 编译项目
         working-directory: ./tdesktop/out
         run: |

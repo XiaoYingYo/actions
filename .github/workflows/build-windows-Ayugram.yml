@@ -146,7 +146,7 @@ jobs:
 
       - name: 分卷压缩构建目录
         run: |
-          mkdir pack
+          mkdir .\pack
           7z a -t7z -mx=9 -v1024m .\pack\AyuGram-bind.7z .\tdesktop .\Libraries .\ThirdParty
         shell: pwsh
 
