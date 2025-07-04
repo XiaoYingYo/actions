@@ -25,7 +25,7 @@ jobs:
         id: cache-fileManager4
         uses: actions/cache@v4
         with:
-          path: filecat
+          path: .\filecat
           key: ${{ runner.os }}-fileManager4-${{ github.ref_name }}
           restore-keys: |
             ${{ runner.os }}-fileManager4-
