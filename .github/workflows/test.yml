@@ -59,6 +59,13 @@ jobs:
           Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
         shell: powershell
 
+      - name: 等待 Wait 消失
+        run: |
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
+
       # - name: 初始化备份工具 01
       #   continue-on-error: true
       #   run: |
@@ -83,13 +90,6 @@ jobs:
       #     Add-WBBackupTarget -Policy $policy -Target $target
       #     Start-WBBackup -Policy $policy -Verbose
       #   shell: powershell
-
-      - name: 等待 Wait 消失
-        run: |
-          New-Item -ItemType File -Path "Wait" -Force
-          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
-        working-directory: ./
-        shell: powershell
 
       - name: 列出D盘
         run: |
