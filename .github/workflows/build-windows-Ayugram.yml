@@ -142,7 +142,9 @@ jobs:
           path: tdesktop/out/Release/AyuGram.exe
 
       - name: 安装 7-Zip
-        uses: DuckSoft/setup-7zip@v1
+        uses: milliewalky/setup-7-zip@v2
+        with:
+          tag: ''
 
       - name: 分卷压缩构建目录
         run: |
