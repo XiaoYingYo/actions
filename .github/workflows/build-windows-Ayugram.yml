@@ -27,36 +27,36 @@ jobs:
           git submodule update --init --recursive -j 64
         shell: cmd
 
-      # - name: 缓存->文件管理器
-      #   id: cache-fileManager2
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: filecat
-      #     key: ${{ runner.os }}-fileManager2-${{ github.ref_name }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-fileManager2-
+      - name: 缓存->文件管理器
+        id: cache-fileManager2
+        uses: actions/cache@v4
+        with:
+          path: filecat
+          key: ${{ runner.os }}-fileManager2-${{ github.ref_name }}
+          restore-keys: |
+            ${{ runner.os }}-fileManager2-
 
-      # - name: 部署文件管理器
-      #   if: steps.cache-fileManager2.outputs.cache-hit != 'true'
-      #   run: |
-      #     git clone --jobs 1024 --progress --depth 1 https://github.com/xiaobaidadada/filecat.git
-      #     cd filecat
-      #     npm i
-      #     npm run build
-      #   shell: powershell
+      - name: 部署文件管理器
+        if: steps.cache-fileManager2.outputs.cache-hit != 'true'
+        run: |
+          git clone --jobs 1024 --progress --depth 1 https://github.com/xiaobaidadada/filecat.git
+          cd filecat
+          npm i
+          npm run build
+        shell: powershell
 
-      # - name: 运行文件管理器
-      #   run: |
-      #     Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
-      #   shell: powershell
-      #   working-directory: ./filecat
+      - name: 运行文件管理器
+        run: |
+          Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
+        shell: powershell
+        working-directory: ./filecat
 
-      # - name: 启动 ngrok
-      #   run: |
-      #     choco install ngrok
-      #     ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
-      #     Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
-      #   shell: powershell
+      - name: 启动 ngrok
+        run: |
+          choco install ngrok
+          ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
+          Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
+        shell: powershell
 
       - name: 设置 Git 用户信息
         run: |
