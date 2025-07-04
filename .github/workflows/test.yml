@@ -1,0 +1,95 @@
+name: 测试
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '()'
+        required: true
+        default: 'master'
+        type: string
+
+run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由 ${{ github.actor }} 触发'
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      # - name: 检出仓库
+      #   run: |
+      #     git clone --jobs 1024 --progress --depth 1 https://github.com/${{ github.repository }}.git .
+      #   shell: cmd
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: 缓存->文件管理器
+        id: cache-fileManager3
+        uses: actions/cache@v4
+        with:
+          path: filecat
+          key: ${{ runner.os }}-fileManager3-${{ github.ref_name }}
+          restore-keys: |
+            ${{ runner.os }}-fileManager3-
+
+      - name: 部署文件管理器
+        if: steps.cache-fileManager3.outputs.cache-hit != 'true'
+        run: |
+          git clone --jobs 1024 --progress --depth 1 https://github.com/xiaobaidadada/filecat.git
+          cd filecat
+          npm i
+          npm run build
+        shell: powershell
+
+      - name: 运行文件管理器
+        run: |
+          Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
+        shell: powershell
+        working-directory: ./filecat
+
+      - name: 启动 ngrok
+        run: |
+          choco install ngrok
+          ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
+          Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
+        shell: powershell
+
+      - name: 等待 Wait 消失
+        run: |
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
+
+      - name: 列出D盘
+        run: |
+          dir D:\
+        shell: cmd
+
+      - name: 缓存测试文件和时间信息
+        uses: actions/cache@v4
+        with:
+          path: |
+            test-file.txt
+          key: ${{ runner.os }}-test-cache-v1-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-test-cache-v1-
+
+      - name: 准备测试文件并记录时间
+        id: prepare-files
+        shell: pwsh
+        run: |
+          $filePath = "test-file.txt"
+          try {
+              $file = Get-Item $filePath
+              echo "文件 'test-file.txt' 上次修改时间: $($file.LastWriteTimeUtc.ToString('o'))"
+              Add-Content -Path $filePath -Value "`nModified at $(Get-Date -Format o)"
+              echo "文件 'test-file.txt' 内容已修改。"
+              $file = Get-Item $filePath
+              echo "文件 'test-file.txt' 本次修改时间: $($file.LastWriteTimeUtc.ToString('o'))"
+          } catch {
+              Set-Content -Path $filePath -Value "Hello, GitHub Actions Cache!"
+              echo "文件 'test-file.txt' 已创建。"
+          }
