@@ -13,7 +13,8 @@ run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由
 
 jobs:
   test:
-    runs-on: windows-2022
+    # runs-on: windows-2022
+    runs-on: self-hosted
     steps:
       # - name: 检出仓库
       #   run: |
