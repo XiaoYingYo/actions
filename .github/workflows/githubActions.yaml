@@ -1,8 +1,18 @@
 name: Run Java Application
+
 on:
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
+    inputs:
+      branch:
+        description: '()'
+        required: true
+        default: 'master'
+        type: string
+
+# on:
+#   schedule:
+#     - cron: "*/5 * * * *"
+#   workflow_dispatch:
 
 jobs:
   run-jar:
