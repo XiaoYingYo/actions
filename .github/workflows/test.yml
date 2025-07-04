@@ -41,7 +41,8 @@ jobs:
 
       - name: 运行文件管理器
         run: |
-          Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
+          # Start-Process -FilePath "npm" -ArgumentList "run start" -WindowStyle Hidden
+          cmd /c "start /b npm run start > filecat.log 2>&1"
         shell: powershell
         working-directory: ./filecat
 
@@ -60,9 +61,10 @@ jobs:
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
         shell: powershell
 
-      - name: 输出 tunnelmole 日志
+      - name: 输出日志
         run: |
           Start-Sleep -Seconds 2
+          Get-Content -Path "filecat.log"
           Get-Content -Path "tmole.log"
         shell: powershell
 
