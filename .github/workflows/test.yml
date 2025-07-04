@@ -57,7 +57,7 @@ jobs:
         run: |
           curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
           # Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
-          Start-Process -FilePath ".\tmole.exe" -ArgumentList "5567" -RedirectStandardOutput "tmole.log" -RedirectStandardError "tmole.log" -NoNewWindow
+          cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
         shell: powershell
 
       - name: 输出 tunnelmole 日志
