@@ -22,16 +22,16 @@ jobs:
       #   shell: cmd
 
       - name: 缓存->文件管理器
-        id: cache-fileManager3
+        id: cache-fileManager4
         uses: actions/cache@v4
         with:
           path: filecat
-          key: ${{ runner.os }}-fileManager3-${{ github.ref_name }}
+          key: ${{ runner.os }}-fileManager4-${{ github.ref_name }}
           restore-keys: |
-            ${{ runner.os }}-fileManager3-
+            ${{ runner.os }}-fileManager4-
 
       - name: 部署文件管理器
-        if: steps.cache-fileManager3.outputs.cache-hit != 'true'
+        if: steps.cache-fileManager4.outputs.cache-hit != 'true'
         run: |
           git clone --jobs 1024 --progress --depth 1 https://github.com/xiaobaidadada/filecat.git
           cd filecat
