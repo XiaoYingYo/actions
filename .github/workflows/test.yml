@@ -55,7 +55,7 @@ jobs:
 
       - name: 启动 tunnelmole
         run: |
-          curl -O https://tunnelmole.com/downloads/tmole.exe
+          curl -O https://tunnelmole.com/downloads/tmole.exe -OutFile tmole.exe
           Start-Process -FilePath "tmole.exe" -ArgumentList "5567" -WindowStyle Hidden
         shell: powershell
 
