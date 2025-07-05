@@ -45,7 +45,7 @@ jobs:
       - name: 启动 localtunnel
         run: |
           npm install -g localtunnel
-          cmd /c "curl -L https://loca.lt/mytunnelpassword > lt.txt"
+          echo "当前运行器公网 IP: $(curl -s https://api.ipify.org)"
           cmd /c "start /b lt --port 5567 > localtunnel.log 2>&1"
         shell: powershell
 
