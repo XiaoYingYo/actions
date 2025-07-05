@@ -45,13 +45,14 @@ jobs:
       - name: 启动 localtunnel
         run: |
           npm install -g localtunnel
-          (irm https://loca.lt/mytunnelpassword).Content
+          cmd /c "curl -L https://loca.lt/mytunnelpassword > lt.txt"
           cmd /c "start /b lt --port 5567 > localtunnel.log 2>&1"
         shell: powershell
 
       - name: 输出日志
         run: |
           Start-Sleep -Seconds 2
+          Get-Content -Path "lt.log"
           Get-Content -Path "tmole.log"
           Get-Content -Path "localtunnel.log"
         shell: powershell
