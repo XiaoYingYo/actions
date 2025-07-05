@@ -29,11 +29,11 @@ jobs:
 
       - name: 启动 ngrok
         run: |
-          choco install ngrok
-          ngrok config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
-          Start-Process -FilePath "ngrok" -ArgumentList "http 5567" -WindowStyle Hidden
+          ngrok.exe config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
+          Start-Process -FilePath "ngrok.exe" -ArgumentList "http 5567" -WindowStyle Hidden
           # Start-Process -FilePath "frpc.exe" -ArgumentList "-c frpc.toml" -WindowStyle Hidden
         shell: powershell
+        working-directory: ./app
 
       - name: 启动 tunnelmole
         run: |
