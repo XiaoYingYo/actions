@@ -42,10 +42,17 @@ jobs:
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
         shell: powershell
 
+      - name: 启动 tunnelmole
+        run: |
+          npm install -g localtunnel
+          cmd /c "start /b lt --port 5567 > localtunnel.log 2>&1"
+        shell: powershell
+
       - name: 输出日志
         run: |
           Start-Sleep -Seconds 2
           Get-Content -Path "tmole.log"
+          Get-Content -Path "localtunnel.log"
         shell: powershell
 
       - name: 等待 Wait 消失
