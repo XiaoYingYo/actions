@@ -45,8 +45,9 @@ jobs:
       - name: 启动 localtunnel
         run: |
           npm install -g localtunnel
-          echo "当前运行器公网 IP: $(curl -s https://whois.pconline.com.cn/ipJson.jsp?ip=&json=true)"
+          curl.exe -L -o ipJson.txt "https://whois.pconline.com.cn/ipJson.jsp?ip=&json=true"
           cmd /c "start /b lt --port 5567 > localtunnel.log 2>&1"
+           while (Test-Path "localtunnel.log") {Start-Sleep -Seconds 1}
         shell: cmd
 
       - name: 输出日志
