@@ -43,9 +43,8 @@ jobs:
 
       - name: 启动 Cloudflare Tunnel
         run: |
-          Invoke-WebRequest -Uri "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe" -OutFile "cloudflared.exe"
           Start-Process -FilePath ".\cloudflared.exe" -ArgumentList "tunnel run --url http://localhost:5567 --token eyJhIjoiODI3NTBlNDg5MDlkYjQ1MWQ3Njg0NzZmNDk2YTM5ZTAiLCJ0IjoiNWU2ZmI1ZDMtMzU4Zi00OGZkLThkNGUtNzcxODEyMzFlYWVhIiwicyI6Ik56VmlZamcxWm1ZdFl6VmpaaTAwTlRjNUxUazROekV0TldKbE1UQTVZVGxsTkdabCJ9" -WindowStyle Hidden
-          Start-Sleep -Seconds 5
+        working-directory: ./app
         shell: powershell
 
       - name: 输出日志
