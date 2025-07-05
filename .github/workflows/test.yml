@@ -45,7 +45,7 @@ jobs:
       - name: 启动 localtunnel
         run: |
           npm install -g localtunnel
-          wget -q -O - https://loca.lt/mytunnelpassword
+          (irm https://loca.lt/mytunnelpassword).Content
           cmd /c "start /b lt --port 5567 > localtunnel.log 2>&1"
         shell: powershell
 
