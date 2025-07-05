@@ -47,7 +47,7 @@ jobs:
           npm install -g localtunnel
           echo "当前运行器公网 IP: $(curl -s https://api.ipify.org)"
           cmd /c "start /b lt --port 5567 > localtunnel.log 2>&1"
-        shell: powershell
+        shell: cmd
 
       - name: 输出日志
         run: |
