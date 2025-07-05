@@ -78,33 +78,9 @@ jobs:
           Start-WBBackup -Policy $policy -Verbose
         shell: powershell
 
-      - name: 列出D盘
+      - name: 等待 Wait 消失
         run: |
-          dir D:\
-        shell: cmd
-
-      - name: 缓存测试文件和时间信息
-        uses: actions/cache@v4
-        with:
-          path: |
-            test-file.txt
-          key: ${{ runner.os }}-test-cache-v1-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-test-cache-v1-
-
-      - name: 准备测试文件并记录时间
-        id: prepare-files
-        shell: pwsh
-        run: |
-          $filePath = "test-file.txt"
-          try {
-              $file = Get-Item $filePath
-              echo "文件 'test-file.txt' 上次修改时间: $($file.LastWriteTimeUtc.ToString('o'))"
-              Add-Content -Path $filePath -Value "`nModified at $(Get-Date -Format o)"
-              echo "文件 'test-file.txt' 内容已修改。"
-              $file = Get-Item $filePath
-              echo "文件 'test-file.txt' 本次修改时间: $($file.LastWriteTimeUtc.ToString('o'))"
-          } catch {
-              Set-Content -Path $filePath -Value "Hello, GitHub Actions Cache!"
-              echo "文件 'test-file.txt' 已创建。"
-          }
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
