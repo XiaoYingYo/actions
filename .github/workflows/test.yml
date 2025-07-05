@@ -41,6 +41,13 @@ jobs:
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
         shell: powershell
 
+      - name: 启动 Cloudflare Tunnel
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe" -OutFile "cloudflared.exe"
+          Start-Process -FilePath ".\cloudflared.exe" -ArgumentList "tunnel run --token eyJhIjoiODI3NTBlNDg5MDlkYjQ1MWQ3Njg0NzZmNDk2YTM5ZTAiLCJ0IjoiNWU2ZmI1ZDMtMzU4Zi00OGZkLThkNGUtNzcxODEyMzFlYWVhIiwicyI6Ik56VmlZamcxWm1ZdFl6VmpaaTAwTlRjNUxUazROekV0TldKbE1UQTVZVGxsTkdabCJ9" -WindowStyle Hidden
+          Start-Sleep -Seconds 5
+        shell: powershell
+
       - name: 启动 localtunnel
         run: |
           npm install -g localtunnel
