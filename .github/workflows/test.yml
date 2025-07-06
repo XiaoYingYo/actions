@@ -43,7 +43,6 @@ jobs:
         shell: powershell
 
       - name: 启动 Tunnel 并获取 URL
-        id: tunnel # 给这个步骤一个 id，方便后面引用它的 output
         run: |
           Start-Process -NoNewWindow -FilePath "./cloudflared.exe" -ArgumentList "tunnel", "--url", "http://localhost:5567" -RedirectStandardOutput "cloudflared.log" -RedirectStandardError "cloudflared.log"
           while (!(Get-Content -Path "cloudflared.log" | Select-String -Pattern "https://")) {Start-Sleep -Seconds 1}
