@@ -30,6 +30,8 @@ jobs:
         run: |
           Move-Item -Path "./app/filebrowser/*" -Destination "D:\" -Force
           cmd /c "start /b D:\filebrowser.exe > filebrowser.log 2>&1"
+          while (!(Test-Path "filebrowser.log")) {Start-Sleep -Seconds 1}
+          Get-Content -Path "filebrowser.log"
         shell: powershell
 
       - name: 启动 tunnelmole
