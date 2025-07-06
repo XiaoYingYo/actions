@@ -44,7 +44,7 @@ jobs:
 
       - name: 启动 Tunnel 并获取 URL
         run: |
-          Start-Process -NoNewWindow -FilePath "./cloudflared.exe" -ArgumentList "tunnel", "--url", "http://localhost:5567" -RedirectStandardOutput "cloudflared.log" -RedirectStandardError "cloudflared.log"
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > cloudflared.log 2>&1"
           while (!(Get-Content -Path "cloudflared.log" | Select-String -Pattern "https://")) {Start-Sleep -Seconds 1}
           Get-Content -Path "cloudflared.log"
         working-directory: ./app
