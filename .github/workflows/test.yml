@@ -26,10 +26,10 @@ jobs:
         shell: powershell
         working-directory: ./app/filecat
 
-      - name: 运行filebrowser
+      - name: 移动filebrowser到根目录并运行
         run: |
           Move-Item -Path "./app/filebrowser/*" -Destination "D:\" -Force
-          Start-Process -FilePath "filebrowser.exe" -WindowStyle Hidden
+          cmd /c "start /b D:\filebrowser.exe > filebrowser.log 2>&1"
         shell: powershell
 
       - name: 启动 tunnelmole
