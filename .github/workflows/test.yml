@@ -26,13 +26,13 @@ jobs:
         shell: powershell
         working-directory: ./app/filecat
 
-      - name: 移动filebrowser到根目录并运行
+      - name: 运行 filebrowser
         run: |
-          Move-Item -Path "./app/filebrowser/*" -Destination "D:\" -Force
-          cmd /c "start /b D:\filebrowser.exe > filebrowser.log 2>&1"
+          cmd /c "start /b filebrowser.exe > filebrowser.log 2>&1"
           while (!(Get-Content -Path "filebrowser.log" | Select-String -Quiet -Pattern ":8080" -SimpleMatch)) { Start-Sleep -Seconds 1 }
           Get-Content -Path "filebrowser.log"
         shell: powershell
+        working-directory: ./app/filebrowser
 
       - name: 启动 tunnelmole
         run: |
@@ -72,13 +72,6 @@ jobs:
       - name: 输出日志
         run: |
           Get-Content -Path "tmole.log"
-        shell: powershell
-
-      - name: 等待 Wait 消失
-        run: |
-          New-Item -ItemType File -Path "Wait" -Force
-          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
-        working-directory: ./
         shell: powershell
 
       - name: 初始化备份工具 01
