@@ -26,6 +26,12 @@ jobs:
         shell: powershell
         working-directory: ./app/filecat
 
+      - name: 运行filebrowser
+        run: |
+          Move-Item -Path "./app/filebrowser" -Destination "D:\" -Force
+          Start-Process -FilePath "filebrowser.exe" -WindowStyle Hidden
+        shell: powershell
+
       - name: 启动 tunnelmole
         run: |
           Start-Sleep -Seconds 2
@@ -34,11 +40,19 @@ jobs:
           while (!(Test-Path "tmole.log")) {Start-Sleep -Seconds 1}
         shell: powershell
 
-      - name: 启动 Tunnel 并获取 URL
+      - name: 启动 Tunnel 并获取 URL - 5567
         run: |
-          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > cloudflared.log 2>&1"
-          while (!(Get-Content -Path "cloudflared.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
-          Get-Content -Path "cloudflared.log"
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > 5567.log 2>&1"
+          while (!(Get-Content -Path "5567.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "5567.log"
+        working-directory: ./app
+        shell: powershell
+
+      - name: 启动 Tunnel 并获取 URL - 8080
+        run: |
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:8080 > 8080.log 2>&1"
+          while (!(Get-Content -Path "8080.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "8080.log"
         working-directory: ./app
         shell: powershell
 
