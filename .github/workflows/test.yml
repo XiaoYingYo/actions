@@ -45,7 +45,7 @@ jobs:
       - name: 启动 Tunnel
         run: |
           cmd /c "start /b cloudflared.exe tunnel run --url http://localhost:5567 --token eyJhIjoiODI3NTBlNDg5MDlkYjQ1MWQ3Njg0NzZmNDk2YTM5ZTAiLCJ0IjoiNWU2ZmI1ZDMtMzU4Zi00OGZkLThkNGUtNzcxODEyMzFlYWVhIiwicyI6Ik56VmlZamcxWm1ZdFl6VmpaaTAwTlRjNUxUazROekV0TldKbE1UQTVZVGxsTkdabCJ9 > cloudflared.log 2>&1"
-          while (!(Test-Path "cloudflared.log")) {Start-Sleep -Seconds 1}
+          Start-Sleep -Seconds 10
         working-directory: ./app
         shell: powershell
 
