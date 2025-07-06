@@ -55,6 +55,12 @@ jobs:
           rmdir /s /q "C:\Program Files\Microsoft Visual Studio"
         shell: cmd
 
+      - name: 显示C盘已用空间
+        run: |
+          $usedSpace = (Get-PSDrive C).Used / 1GB
+          Write-Host "C盘已用空间: $usedSpace GB"
+        shell: powershell
+
       - name: 输出日志
         run: |
           Get-Content -Path "tmole.log"
