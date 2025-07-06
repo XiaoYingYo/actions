@@ -28,7 +28,7 @@ jobs:
 
       - name: 运行filebrowser
         run: |
-          Move-Item -Path "./app/filebrowser" -Destination "D:\" -Force
+          Move-Item -Path "./app/filebrowser/*" -Destination "D:\" -Force
           Start-Process -FilePath "filebrowser.exe" -WindowStyle Hidden
         shell: powershell
 
