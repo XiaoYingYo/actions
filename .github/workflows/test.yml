@@ -61,6 +61,8 @@ jobs:
       - name: 删除文件减少备份数据量
         run: |
           rmdir /s /q "C:\Program Files\Microsoft Visual Studio"
+          rmdir /s /q "C:\mingw32"
+          rmdir /s /q "C:\Program Files (x86)\Windows Kits\10\"
         shell: cmd
 
       - name: 输出日志
@@ -89,6 +91,7 @@ jobs:
           $target = New-WBBackupTarget -VolumePath "D:\"
           Add-WBBackupTarget -Policy $policy -Target $target
           Start-WBBackup -Policy $policy -Verbose
+          # 7z a -t7z -mx=0 -v10240m "C:\1.7z" "3649af8b-0000-0000-0000-501f00000000.vhdx"
         shell: powershell
 
       - name: 等待 Wait 消失
