@@ -66,8 +66,6 @@ jobs:
               }
               Start-Sleep -Seconds 2
           }
-          echo "TUNNEL_URL=$tunnelUrl" >> $env:GITHUB_ENV
-          echo "tunnel-url=$tunnelUrl" >> $env:GITHUB_OUTPUT
         working-directory: ./app
         shell: powershell
 
