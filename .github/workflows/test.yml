@@ -39,17 +39,18 @@ jobs:
           Start-Sleep -Seconds 2
           curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
+          while (!(Test-Path "tmole.log")) {Start-Sleep -Seconds 1}
         shell: powershell
 
       - name: 启动 Tunnel
         run: |
           cmd /c "start /b cloudflared.exe tunnel run --url http://localhost:5567 --token eyJhIjoiODI3NTBlNDg5MDlkYjQ1MWQ3Njg0NzZmNDk2YTM5ZTAiLCJ0IjoiNWU2ZmI1ZDMtMzU4Zi00OGZkLThkNGUtNzcxODEyMzFlYWVhIiwicyI6Ik56VmlZamcxWm1ZdFl6VmpaaTAwTlRjNUxUazROekV0TldKbE1UQTVZVGxsTkdabCJ9 > cloudflared.log 2>&1"
+          while (!(Test-Path "cloudflared.log")) {Start-Sleep -Seconds 1}
         working-directory: ./app
         shell: powershell
 
       - name: 输出日志
         run: |
-          Start-Sleep -Seconds 2
           Get-Content -Path "cloudflared.log"
           Get-Content -Path "tmole.log"
         shell: powershell
