@@ -32,33 +32,6 @@ jobs:
           git submodule update --init --recursive -j 64
         shell: cmd
 
-      - name: 运行文件管理器
-        run: |
-          Start-Process -FilePath "run.cmd" -ArgumentList "--port 5567" -WindowStyle Hidden
-        shell: powershell
-        working-directory: ./app/filecat
-
-      - name: 启动 ngrok
-        run: |
-          ngrok.exe config add-authtoken 2zNdGB2Y74Dh93IXhWP3CkSjEHw_4R1QMD4r2o8F5GAVXzyHu
-          Start-Process -FilePath "ngrok.exe" -ArgumentList "http 5567" -WindowStyle Hidden
-          # Start-Process -FilePath "frpc.exe" -ArgumentList "-c frpc.toml" -WindowStyle Hidden
-        shell: powershell
-        working-directory: ./app
-
-      - name: 启动 tunnelmole
-        run: |
-          Start-Sleep -Seconds 2
-          curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
-          cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
-        shell: powershell
-
-      - name: 输出日志
-        run: |
-          Start-Sleep -Seconds 2
-          Get-Content -Path "tmole.log"
-        shell: powershell
-
       - name: 设置 Git 用户信息
         run: |
           git config --global user.name "XiaoYingYo"
