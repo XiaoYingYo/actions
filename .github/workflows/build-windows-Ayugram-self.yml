@@ -18,7 +18,7 @@ run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: self-hosted
     steps:
       - name: 检出仓库
         run: |
@@ -159,6 +159,13 @@ jobs:
           name: AyuGramDesktop-Windows-chunks
           path: .\pack\
           retention-days: 7
+
+      - name: 等待 Wait 消失
+        run: |
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
 
       # - name: 上传整个构建完毕目录
       #   uses: actions/upload-artifact@v4
