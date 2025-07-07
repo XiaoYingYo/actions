@@ -160,6 +160,13 @@ jobs:
           path: .\pack\
           retention-days: 7
 
+      - name: 等待 Wait 消失
+        run: |
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
+
       # - name: 上传整个构建完毕目录
       #   uses: actions/upload-artifact@v4
       #   with:
