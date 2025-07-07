@@ -1,4 +1,4 @@
-name: 编译 Ayugram
+name: 编译 Ayugram Self
 
 on:
   workflow_dispatch:
