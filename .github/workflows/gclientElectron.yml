@@ -50,7 +50,7 @@ jobs:
           while (!(Test-Path "tmole_5567.log")) {Start-Sleep -Seconds 1}
         shell: powershell
 
-      - name: 启动 Tunnel 并获取 URL - 5567
+      - name: 启动 Tunnel - 5567
         run: |
           cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > 5567.log 2>&1"
           while (!(Get-Content -Path "5567.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
@@ -58,7 +58,7 @@ jobs:
         working-directory: ./app
         shell: powershell
 
-      - name: 启动 Tunnel 并获取 URL - 8080
+      - name: 启动 Tunnel - 8080
         run: |
           cmd /c "start /b cloudflared.exe tunnel --url http://localhost:8080 > 8080.log 2>&1"
           while (!(Get-Content -Path "8080.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
@@ -66,7 +66,7 @@ jobs:
         working-directory: ./app
         shell: powershell
 
-      - name: 启动 Tunnel 并获取 URL - 3389
+      - name: 启动 Tunnel - 3389
         run: |
           cmd /c "start /b cloudflared.exe tunnel --url tcp://localhost:3389 > 3389.log 2>&1"
           while (!(Get-Content -Path "3389.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
