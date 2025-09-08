@@ -71,13 +71,21 @@ jobs:
         shell: powershell
 
       - name: 安装最新的 Git
-        run: winget install --id Git.Git -e --source winget
+        run: |
+          Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe -OutFile Git-2.51.0-64-bit.exe
+          Start-Process -FilePath ".\Git-2.51.0-64-bit.exe" -ArgumentList "/VERYSILENT" -Wait
         shell: powershell
 
       - name: 更新 PATH for Git
         run: |
           echo "C:\Program Files\Git\cmd" >> $env:GITHUB_PATH
           echo "C:\Program Files\Git\bin" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 验证 Git 版本
+        run: |
+          git --version
+          gcm git
         shell: powershell
 
       - name: 手动安装 Python 2.7.18
