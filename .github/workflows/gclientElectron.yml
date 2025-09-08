@@ -74,7 +74,16 @@ jobs:
         run: |
           Invoke-WebRequest -Uri https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi -OutFile python-2.7.18.amd64.msi
           msiexec /i python-2.7.18.amd64.msi /qn TARGETDIR=C:\Python27 ALLUSERS=1
-          echo "C:\Python27;C:\Python27\Scripts;$($env:PATH)" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        shell: powershell
+
+      - name: 更新 PATH
+        run: |
+          echo "C:\Python27" >> $env:GITHUB_PATH
+          echo "C:\Python27\Scripts" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 验证 Python 版本
+        run: |
           python --version
           gcm python
         shell: powershell
