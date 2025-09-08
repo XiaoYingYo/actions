@@ -70,10 +70,10 @@ jobs:
           Get-Content -Path "tmole.log"
         shell: powershell
 
-      - name: 下载并安装 AskLink
+      - name: 安装 AskLink
         run: |
-          Invoke-WebRequest -Uri https://oss.asklink.com/updata/official-version/windows/AskLink_Full_v4.0.18.1_20250905_1922.exe -OutFile AskLink.exe
           Start-Process -FilePath ".\AskLink.exe" -ArgumentList "/VERYSILENT" -Wait
+        working-directory: ./app
         shell: powershell
 
       - name: AskLink 连接信息
