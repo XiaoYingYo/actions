@@ -70,6 +70,38 @@ jobs:
           Get-Content -Path "tmole.log"
         shell: powershell
 
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '2.7.18'
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: 克隆 depot_tools
+        run: git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        shell: cmd
+
+      - name: 添加 depot_tools 到 PATH
+        run: echo "${{ github.workspace }}\depot_tools" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 设置环境变量
+        run: echo "DEPOT_TOOLS_WIN_TOOLCHAIN=0" >> $env:GITHUB_ENV
+        shell: powershell
+
+      - name: 配置 gclient
+        run: gclient config --name "src/electron" --unmanaged https://github.com/electron/electron.git
+        shell: cmd
+
+      - name: 同步 gclient
+        run: |
+          git config --system core.longpaths true
+          gclient sync --no-history --with_branch_heads --with_tags -v -j32
+        shell: cmd
+
       # - name: 初始化备份工具 01
       #   continue-on-error: true
       #   run: |
