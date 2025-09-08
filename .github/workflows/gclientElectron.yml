@@ -1,0 +1,102 @@
+name: 测试
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '()'
+        required: true
+        default: 'master'
+        type: string
+
+run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由 ${{ github.actor }} 触发'
+
+jobs:
+  test:
+    runs-on: windows-2022
+    steps:
+      - name: 检出仓库
+        run: |
+          git clone --jobs 1024 --progress --depth 1 https://github.com/${{ github.repository }}.git .
+        shell: cmd
+
+      - name: 运行文件管理器
+        run: |
+          Start-Process -FilePath "run.cmd" -ArgumentList "--port 5567" -WindowStyle Hidden
+        shell: powershell
+        working-directory: ./app/filecat
+
+      - name: 运行 filebrowser
+        run: |
+          cmd /c "start /b filebrowser.exe > filebrowser.log 2>&1"
+          while (!(Get-Content -Path "filebrowser.log" | Select-String -Quiet -Pattern ":8080" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "filebrowser.log"
+        shell: powershell
+        working-directory: ./app/filebrowser
+
+      - name: 启动 tunnelmole
+        run: |
+          Start-Sleep -Seconds 2
+          curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
+          cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
+          while (!(Test-Path "tmole.log")) {Start-Sleep -Seconds 1}
+        shell: powershell
+
+      - name: 启动 Tunnel 并获取 URL - 5567
+        run: |
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > 5567.log 2>&1"
+          while (!(Get-Content -Path "5567.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "5567.log"
+        working-directory: ./app
+        shell: powershell
+
+      - name: 启动 Tunnel 并获取 URL - 8080
+        run: |
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:8080 > 8080.log 2>&1"
+          while (!(Get-Content -Path "8080.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "8080.log"
+        working-directory: ./app
+        shell: powershell
+
+      # - name: 删除文件减少备份数据量
+      #   run: |
+      #     rmdir /s /q "C:\Program Files\Microsoft Visual Studio"
+      #     rmdir /s /q "C:\mingw32"
+      #     rmdir /s /q "C:\Program Files (x86)\Windows Kits\10\"
+      #   shell: cmd
+
+      - name: 输出日志
+        run: |
+          Get-Content -Path "tmole.log"
+        shell: powershell
+
+      # - name: 初始化备份工具 01
+      #   continue-on-error: true
+      #   run: |
+      #     Enable-WindowsOptionalFeature -Online -FeatureName WindowsServerBackup
+      #   shell: powershell
+
+      # - name: 初始化备份工具 02
+      #   run: |
+      #     Add-WindowsCapability -Online -Name "Rsat.ServerBackup.Tools~~~~0.0.1.0"
+      #   shell: powershell
+
+      # - name: 备份
+      #   continue-on-error: true
+      #   run: |
+      #     Import-Module WindowsServerBackup
+      #     $policy = New-WBPolicy
+      #     $volume = Get-WBVolume -VolumePath "C:\"
+      #     Add-WBVolume -Policy $policy -Volume $volume
+      #     $target = New-WBBackupTarget -VolumePath "D:\"
+      #     Add-WBBackupTarget -Policy $policy -Target $target
+      #     Start-WBBackup -Policy $policy -Verbose
+      #     # 7z a -t7z -mx=0 -v10240m "C:\1.7z" "3649af8b-0000-0000-0000-501f00000000.vhdx"
+      #   shell: powershell
+
+      - name: 等待 Wait 消失
+        run: |
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
