@@ -72,8 +72,8 @@ jobs:
 
       - name: 安装最新的 Git
         run: |
-          Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe -OutFile Git-2.51.0-64-bit.exe
-          Start-Process -FilePath ".\Git-2.51.0-64-bit.exe" -ArgumentList "/VERYSILENT" -Wait
+          Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe -OutFile Git.exe
+          Start-Process -FilePath ".\Git.exe" -ArgumentList "/VERYSILENT" -Wait
         shell: powershell
 
       - name: 更新 PATH for Git
