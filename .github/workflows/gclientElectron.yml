@@ -25,6 +25,7 @@ jobs:
       - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
       - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "@cyb3rking" -Force)
+        shell: powershell
 
       - name: 运行文件管理器
         run: |
@@ -66,7 +67,7 @@ jobs:
 
       - name: 启动 Tunnel 并获取 URL - 3389
         run: |
-          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:3389 > 3389.log 2>&1"
+          cmd /c "start /b cloudflared.exe access rdp --hostname rdp.$(Get-Random -Maximum 99999).trycloudflare.com --url rdp://localhost:3389 > 3389.log 2>&1"
           while (!(Get-Content -Path "3389.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
           Get-Content -Path "3389.log"
         working-directory: ./app
