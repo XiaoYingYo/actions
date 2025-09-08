@@ -20,25 +20,11 @@ jobs:
           git clone --jobs 1024 --progress --depth 1 https://github.com/${{ github.repository }}.git .
         shell: cmd
 
-      - name: 下载 ngrok
-        run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
-
-      - name: 解压 ngrok
-        run: Expand-Archive ngrok.zip
-
-      - name: 配置 ngrok
-        run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
-        env:
-          NGROK_AUTH_TOKEN: 32R28WoiFbi0b2neZhOQGMjXNuF_2TWHyqssyJZrUUjet6TAx
-
       - name: 启用远程桌面
         run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
       - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
       - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "@cyb3rking" -Force)
-
-      - name: 创建 ngrok 隧道
-        run: .\ngrok\ngrok.exe tcp 3389
 
       - name: 运行文件管理器
         run: |
@@ -75,6 +61,14 @@ jobs:
           cmd /c "start /b cloudflared.exe tunnel --url http://localhost:8080 > 8080.log 2>&1"
           while (!(Get-Content -Path "8080.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
           Get-Content -Path "8080.log"
+        working-directory: ./app
+        shell: powershell
+
+      - name: 启动 Tunnel 并获取 URL - 3389
+        run: |
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:3389 > 3389.log 2>&1"
+          while (!(Get-Content -Path "3389.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "3389.log"
         working-directory: ./app
         shell: powershell
 
