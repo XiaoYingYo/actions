@@ -144,6 +144,7 @@ jobs:
         run: |
           git config --system core.longpaths true
           gclient sync --no-history --with_branch_heads --with_tags -v -j32
+        continue-on-error: true
         shell: cmd
 
       # - name: 初始化备份工具 01
