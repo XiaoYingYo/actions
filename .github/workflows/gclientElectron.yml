@@ -68,10 +68,9 @@ jobs:
 
       - name: 启动 Tunnel - 3389
         run: |
-          cmd /c "start /b cloudflared.exe access rdp --url rdp://localhost:3389 > 3389.log 2>&1"
-          while (!(Get-Content -Path "3389.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
-          Get-Content -Path "3389.log"
-        working-directory: ./app
+          cpolar authtoken ZDE5ZWVlNDctMmQ2MC00Njg1LWI4NWQtZmZkMGFiNzE3MGVi
+          cpolar tcp 3389
+        working-directory: ./app/cpolar
         shell: powershell
 
       # - name: 删除文件减少备份数据量
