@@ -105,6 +105,7 @@ jobs:
         run: |
           echo "DEPOT_TOOLS_WIN_TOOLCHAIN=0" >> $env:GITHUB_ENV
           echo "DEPOT_TOOLS_METRICS=0" >> $env:GITHUB_ENV
+          echo "DEPOT_TOOLS_UPDATE=0" >> $env:GITHUB_ENV
         shell: powershell
 
       - name: 配置 Git for depot_tools
