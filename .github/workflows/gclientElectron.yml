@@ -72,7 +72,7 @@ jobs:
 
       - name: AskLink
         run: |
-          Move-Item -Path ".\AskLink" -Destination "C:\Program Files\AskLink" -Force
+          copy .\AskLink "C:\Program Files\AskLink" /E /Y
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --get-id | more
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --set-password MyNewPass123 | more
         working-directory: ./app
