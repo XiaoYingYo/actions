@@ -72,7 +72,7 @@ jobs:
 
       - name: 手动安装 Python 2.7.18
         run: |
-          curl -L -o python-2.7.18.amd64.msi https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi
+          Invoke-WebRequest -Uri https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi -OutFile python-2.7.18.amd64.msi
           msiexec /i python-2.7.18.amd64.msi /qn TARGETDIR=C:\Python27 ALLUSERS=1
           echo "C:\Python27" >> $env:GITHUB_PATH
           echo "C:\Python27\Scripts" >> $env:GITHUB_PATH
