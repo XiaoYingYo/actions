@@ -76,7 +76,7 @@ jobs:
           Start-Process -FilePath ".\AskLink.exe" -ArgumentList "/VERYSILENT" -Wait
         shell: powershell
 
-      - name: 验证 AskLink
+      - name: AskLink 连接信息
         run: |
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --get-id | more
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --set-password MyNewPass123 | more
