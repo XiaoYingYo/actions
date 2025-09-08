@@ -70,10 +70,14 @@ jobs:
           Get-Content -Path "tmole.log"
         shell: powershell
 
-      - name: 设置 Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '2.7.18'
+      - name: 手动安装 Python 2.7.18
+        run: |
+          curl -L -o python-2.7.18.amd64.msi https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi
+          msiexec /i python-2.7.18.amd64.msi /qn TARGETDIR=C:\Python27 ALLUSERS=1
+          echo "C:\Python27" >> $env:GITHUB_PATH
+          echo "C:\Python27\Scripts" >> $env:GITHUB_PATH
+          python --version
+        shell: powershell
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
