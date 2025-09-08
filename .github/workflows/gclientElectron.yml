@@ -115,10 +115,21 @@ jobs:
           gcm python
         shell: powershell
 
-      - name: 设置 Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
+      - name: 安装 Node.js
+        run: |
+          Invoke-WebRequest -Uri https://nodejs.org/dist/v22.5.1/node-v22.5.1-x64.msi -OutFile nodejs.msi
+          msiexec /i nodejs.msi /qn
+        shell: powershell
+
+      - name: 更新 PATH for Node.js
+        run: echo "C:\Program Files\nodejs\" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 验证 Node.js 版本
+        run: |
+          node --version
+          npm --version
+        shell: powershell
 
       - name: 添加 depot_tools 到 PATH
         run: echo "${{ github.workspace }}\depot_tools" >> $env:GITHUB_PATH
