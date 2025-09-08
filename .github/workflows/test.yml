@@ -69,7 +69,8 @@ jobs:
       - name: 启动 Tunnel - 3389
         run: |
           cpolar authtoken ZDE5ZWVlNDctMmQ2MC00Njg1LWI4NWQtZmZkMGFiNzE3MGVi
-          cpolar tcp 3389
+          # cpolar tcp 3389
+          cmd /c "start /b cpolar tcp --region cn 3389 > 3389.log 2>&1"
         working-directory: ./app/cpolar
         shell: cmd
 
