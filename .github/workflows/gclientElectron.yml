@@ -37,10 +37,10 @@ jobs:
       - name: 启动 tunnelmole
         run: |
           Start-Sleep -Seconds 2
-          curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
           cmd /c "start /b tmole.exe 5567 > tmole.log 2>&1"
           while (!(Test-Path "tmole.log")) {Start-Sleep -Seconds 1}
         shell: powershell
+        working-directory: ./app
 
       - name: 启动 Tunnel 并获取 URL - 5567
         run: |
