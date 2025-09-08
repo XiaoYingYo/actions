@@ -72,7 +72,7 @@ jobs:
 
       - name: 安装 AskLink
         run: |
-          ./AskLink.exe /VERYSILENT
+          AskLink.exe /VERYSILENT
         working-directory: ./app
         shell: cmd
 
