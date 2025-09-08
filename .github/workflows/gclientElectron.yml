@@ -1,4 +1,4 @@
-name: 测试
+name: gclient Electron
 
 on:
   workflow_dispatch:
