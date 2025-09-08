@@ -120,10 +120,6 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: 克隆 depot_tools
-        run: git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
-        shell: cmd
-
       - name: 添加 depot_tools 到 PATH
         run: echo "${{ github.workspace }}\depot_tools" >> $env:GITHUB_PATH
         shell: powershell
@@ -145,15 +141,19 @@ jobs:
           git config --global depot-tools.allowGlobalGitConfig true
         shell: cmd
 
-      - name: 配置 gclient
-        run: gclient config --name "src/electron" --unmanaged https://github.com/electron/electron.git
-        shell: cmd
-
       - name: 启动 Tunnel - 3389
         run: |
           cpolar authtoken ZDE5ZWVlNDctMmQ2MC00Njg1LWI4NWQtZmZkMGFiNzE3MGVi
           cpolar tcp 3389
         working-directory: ./app/cpolar
+        shell: cmd
+
+      - name: 克隆 depot_tools
+        run: git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        shell: cmd
+
+      - name: 配置 gclient
+        run: gclient config --name "src/electron" --unmanaged https://github.com/electron/electron.git
         shell: cmd
 
       - name: 同步 gclient
