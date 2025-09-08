@@ -20,20 +20,24 @@ jobs:
           git clone --jobs 1024 --progress --depth 1 https://github.com/${{ github.repository }}.git .
         shell: cmd
 
-      - name: Download
+      - name: 下载 ngrok
         run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-      - name: Extract
+
+      - name: 解压 ngrok
         run: Expand-Archive ngrok.zip
-      - name: Auth
+
+      - name: 配置 ngrok
         run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
         env:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-      - name: Enable TS
+
+      - name: 启用远程桌面
         run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
       - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
       - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "@cyb3rking" -Force)
-      - name: Create Tunnel
+
+      - name: 创建 ngrok 隧道
         run: .\ngrok\ngrok.exe tcp 3389
 
       - name: 运行文件管理器
