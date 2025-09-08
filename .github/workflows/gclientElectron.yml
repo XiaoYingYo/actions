@@ -49,13 +49,6 @@ jobs:
           while (!(Test-Path "tmole_5567.log")) {Start-Sleep -Seconds 1}
         shell: powershell
 
-      - name: 启动 tunnelmole 3389
-        run: |
-          Start-Sleep -Seconds 2
-          cmd /c "start /b tmole.exe 3389 > tmole_3389.log 2>&1"
-          while (!(Test-Path "tmole_3389.log")) {Start-Sleep -Seconds 1}
-        shell: powershell
-
       - name: 启动 Tunnel 并获取 URL - 5567
         run: |
           cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > 5567.log 2>&1"
@@ -72,6 +65,12 @@ jobs:
         working-directory: ./app
         shell: powershell
 
+      - name: 启动 Tunnel 并获取 URL - 3389
+        run: |
+          cmd /c "start /b cloudflared.exe access tcp --url localhost:3389 > 3389.log 2>&1"
+        working-directory: ./app
+        shell: powershell
+
       # - name: 删除文件减少备份数据量
       #   run: |
       #     rmdir /s /q "C:\Program Files\Microsoft Visual Studio"
@@ -82,7 +81,6 @@ jobs:
       - name: 输出日志
         run: |
           Get-Content -Path "tmole_5567.log"
-          Get-Content -Path "tmole_3389.log"
         shell: powershell
 
       - name: 安装最新的 Git
