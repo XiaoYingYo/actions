@@ -71,7 +71,7 @@ jobs:
           cpolar authtoken ZDE5ZWVlNDctMmQ2MC00Njg1LWI4NWQtZmZkMGFiNzE3MGVi
           cpolar tcp 3389
         working-directory: ./app/cpolar
-        shell: powershell
+        shell: cmd
 
       # - name: 删除文件减少备份数据量
       #   run: |
