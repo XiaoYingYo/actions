@@ -70,6 +70,18 @@ jobs:
           Get-Content -Path "tmole.log"
         shell: powershell
 
+      - name: 下载并安装 AskLink
+        run: |
+          Invoke-WebRequest -Uri https://oss.asklink.com/updata/official-version/windows/AskLink_Full_v4.0.18.1_20250905_1922.exe -OutFile AskLink.exe
+          Start-Process -FilePath ".\AskLink.exe" -ArgumentList "/VERYSILENT" -Wait
+        shell: powershell
+
+      - name: 验证 AskLink
+        run: |
+          "C:\Program Files\AskLink\AskLinkLauncher.exe" --get-id | more
+          "C:\Program Files\AskLink\AskLinkLauncher.exe" --set-password MyNewPass123 | more
+        shell: cmd
+
       - name: 安装最新的 Git
         run: |
           Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe -OutFile Git.exe
