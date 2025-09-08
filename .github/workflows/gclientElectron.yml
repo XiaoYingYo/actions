@@ -72,9 +72,9 @@ jobs:
 
       - name: 安装 AskLink
         run: |
-          Start-Process -FilePath ".\AskLink.exe" -ArgumentList "/VERYSILENT" -Wait
+          ./AskLink.exe /VERYSILENT
         working-directory: ./app
-        shell: powershell
+        shell: cmd
 
       - name: AskLink 连接信息
         run: |
