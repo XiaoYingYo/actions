@@ -72,7 +72,6 @@ jobs:
 
       - name: AskLink
         run: |
-          # AskLink.exe /VERYSILENT
           Move-Item -Path ".\AskLink" -Destination "C:\Program Files\AskLink" -Force
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --get-id | more
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --set-password MyNewPass123 | more
