@@ -72,11 +72,13 @@ jobs:
 
       - name: AskLink
         run: |
-          Move-Item -Path ".\AskLink" -Destination "C:\Program Files\AskLink" -Force
+          mkdir "C:\Program Files\AskLink"
+          move .\AskLink\* "C:\Program Files\AskLink"
+          "C:\Program Files\AskLink\AskLinkLauncher.exe"
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --get-id | more
           "C:\Program Files\AskLink\AskLinkLauncher.exe" --set-password MyNewPass123 | more
         working-directory: ./app
-        shell: powershell
+        shell: cmd
 
       - name: 安装最新的 Git
         run: |
