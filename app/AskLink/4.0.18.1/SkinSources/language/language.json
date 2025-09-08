@@ -1,0 +1,285 @@
+{
+	"0": {
+		"0": {
+			"0": {
+				"cn": "协助他人",
+				"zh-tw": "協助他人",
+				"en": "Support Others",
+				"ja": "サポート",
+				"ko": "지원",
+				"es": "Apoyar a Otros",
+				"fr": "Soutenir Autrui"
+			},
+			"1": {
+				"cn": "识别",
+				"zh-tw": "識別",
+				"en": "Recognize",
+				"ja": "識別",
+				"ko": "인식",
+				"es": "Reconocer",
+				"fr": "Reconnaître"
+			},
+			"2": {
+				"cn": "输入对方ID",
+				"zh-tw": "輸入對方ID",
+				"en": "Enter Other's ID",
+				"ja": "相手のIDを入力",
+				"ko": "상대방 ID 입력",
+				"es": "Ingrese la ID del destinatario",
+				"fr": "Entrez l'ID de l'autre personne"
+			},
+			"3": {
+				"cn": "输入对方密码（可为空）",
+				"zh-tw": "輸入對方密碼（可為空）",
+				"en": "Enter Password (optional) ",
+				"ja": "相手のパスワード（空欄可）",
+				"ko": "상대방 비밀번호 입력（선택）",
+				"es": "Ingrese contraseña (opcional) ",
+				"fr": "Entrez le mot de passe (optionnel) "
+			},
+			"4": {
+				"cn": "文件传输",
+				"zh-tw": "文件傳輸",
+				"en": "File Transfer",
+				"ja": "ファイル転送",
+				"ko": "파일 전송",
+				"es": "Transferencia de archivos",
+				"fr": "Transfert de fichiers"
+			},
+			"5": {
+				"cn": "远程协助",
+				"zh-tw": "遠程協助",
+				"en": "Assistance",
+				"ja": "リンク",
+				"ko": "원격 지원",
+				"es": "Asistencia",
+				"fr": "Assistance"
+			}
+		},
+		"1": {
+			"0": {
+				"cn": "协助我",
+				"zh-tw": "協助我",
+				"en": "Assist Me",
+				"ja": "協力",
+				"ko": "협조",
+				"es": "Ayúdame",
+				"fr": "Aidez-moi"
+			},
+			"1": {
+				"cn": "复制",
+				"zh-tw": "複製",
+				"en": "Copy",
+				"ja": "コピー",
+				"ko": "복사",
+				"es": "Copiar",
+				"fr": "Copier"
+			},
+			"2": {
+				"cn": "我的 ID",
+				"zh-tw": "我的 ID",
+				"en": "My ID",
+				"ja": "私のID",
+				"ko": "ID",
+				"es": "Mi ID",
+				"fr": "Mon ID"
+			},
+			"3": {
+				"cn": "今日密码",
+				"zh-tw": "今日密碼",
+				"en": "Today's Password",
+				"ja": "今日のパスワード",
+				"ko": "오늘의 비밀번호",
+				"es": "Contraseña de hoy",
+				"fr": "Mot de passe du jour"
+			},
+			"4": {
+				"cn": "关闭协助",
+				"zh-tw": "關閉協助",
+				"en": "Close Assistance",
+				"ja": "支援を終了",
+				"ko": "지원 종료",
+				"es": "Cerrar asistencia",
+				"fr": "Fermer l'assistance"
+			}
+		},
+		"2": {
+			"1": {
+				"cn": "设备",
+				"zh-tw": "設備",
+				"en": "Devices",
+				"ja": "デバイス",
+				"ko": "장치",
+				"es": "Dispositivos",
+				"fr": "Appareils"
+			},
+			"2": {
+				"cn": "屏幕墙",
+				"zh-tw": "屏幕牆",
+				"en": "Screen Wall",
+				"ja": "スクリーンウォール",
+				"ko": "스크린 월",
+				"es": "Muro de Pantallas",
+				"fr": "Mur d'Écrans"
+			},
+			"3": {
+				"cn": "我的",
+				"zh-tw": "我的",
+				"en": "My Profile",
+				"ja": "プロファイル",
+				"ko": "프로파일",
+				"es": "Mi Perfil",
+				"fr": "Mon Profil"
+			}
+		},
+		"3": {
+			"0": {
+				"cn": "已复制到剪贴板",
+				"zh-tw": "已複製到剪貼板",
+				"en": "Copied to clipboard",
+				"ja": "クリップボードにコピーしました",
+				"ko": "클립보드에 복사되었습니다",
+				"es": "Copiado al portapapeles",
+				"fr": "Copié dans le presse-papiers"
+			},
+			"1": {
+				"cn": "连接断开，请检查网络",
+				"zh-tw": "連接斷開，請檢查網絡",
+				"en": "Connection disconnected, please check the network.",
+				"ja": "接続が切断されました。ネットワークを確認してください。",
+				"ko": "연결이 끊겼습니다. 네트워크를 확인해 주세요.",
+				"es": "Conexión interrumpida, por favor revise la red.",
+				"fr": "Connexion interrompue, veuillez vérifier le réseau."
+			}
+		},
+		"4": {
+			"0": {
+				"cn": "复制",
+				"zh-tw": "複製",
+				"en": "Copy",
+				"ja": "コピー",
+				"ko": "복사",
+				"es": "Copiar",
+				"fr": "Copier"
+			},
+			"1": {
+				"cn": "粘贴",
+				"zh-tw": "貼上",
+				"en": "Paste",
+				"ja": "貼り付け",
+				"ko": "붙여넣기",
+				"es": "Pegar",
+				"fr": "Coller"
+			},
+			"2": {
+				"cn": "全选",
+				"zh-tw": "全選",
+				"en": "Select All",
+				"ja": "全選択",
+				"ko": "전체 선택",
+				"es": "Seleccionar todo",
+				"fr": " Tout sélectionner"
+			}
+		}
+	},
+	"1": {
+		"0": {
+			"0": {
+				"cn": "登录",
+				"zh-tw": "登入",
+				"en": "Log In",
+				"ja": "ログイン",
+				"ko": "로그인",
+				"es": "Iniciar sesión",
+				"fr": "Se connecter"
+			},
+			"1": {
+				"cn": "登录使用更多功能",
+				"zh-tw": "登入以使用更多功能",
+				"en": "Log in to use more features.",
+				"ja": "ログインしてさらに機能を使用する。",
+				"ko": "로그인하여 더 많은 기능을 사용하세요.",
+				"es": "Inicia sesión para usar más funciones.",
+				"fr": "Connectez-vous pour utiliser plus de fonctionnalités."
+			}
+		},
+		"1": {
+			"0": {
+				"0": {
+					"cn": "设置",
+					"zh-tw": "設定",
+					"en": "Settings",
+					"ja": "設定",
+					"ko": "설정",
+					"es": "Configuración",
+					"fr": "Paramètres"
+				},
+				"1": {
+					"cn": "通用",
+					"zh-tw": "通用",
+					"en": "General",
+					"ja": "一般",
+					"ko": "일반",
+					"es": "General",
+					"fr": "Général"
+				},
+				"2": {
+					"cn": "中文",
+					"zh-tw": "中文",
+					"en": "Chinese",
+					"ja": "中国語",
+					"ko": "중국어",
+					"es": "Chino",
+					"fr": "Chinois"
+				},
+				"3": {
+					"cn": "辅助功能",
+					"zh-tw": "輔助功能",
+					"en": "Accessibility",
+					"ja": "アクセシビリティ",
+					"ko": "일반",
+					"es": "Accesibilidad",
+					"fr": "Accessibilité"
+				},
+				"4": {
+					"cn": "安全",
+					"zh-tw": "安全",
+					"en": "Security",
+					"ja": "セキュリティ",
+					"ko": "보안",
+					"es": "Seguridad",
+					"fr": "Sécurité"
+				}
+			},
+			"1": {
+				"0": {
+					"cn": "其他",
+					"zh-tw": "其他",
+					"en": "Other",
+					"ja": "その他",
+					"ko": "기타",
+					"es": "Otros",
+					"fr": "Autre"
+				},
+				"1": {
+					"cn": "帮助",
+					"zh-tw": "幫助",
+					"en": "Help",
+					"ja": "ヘルプ",
+					"ko": "도움말",
+					"es": "Ayuda",
+					"fr": "Aide"
+				},
+				"2": {
+					"cn": "关于",
+					"zh-tw": "關於",
+					"en": "About",
+					"ja": "アバウト",
+					"ko": "정보",
+					"es": "Acerca de",
+					"fr": "À propos"
+				}
+			}
+		}
+	}
+}

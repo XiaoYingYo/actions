@@ -1,0 +1,84 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ManufacturerName%
+CatalogFile=AskLinkVGC.cat
+DriverVer = 08/23/2023,1.0.0.0
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+AskLinkVGC_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+[SourceDisksFiles]
+AskLinkVGC.sys = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64,NTx86,NTARM64
+
+[Standard.NTamd64]
+%AskLinkVGC.DeviceDesc%=AskLinkVGC_Device, AskLink\AskLinkVGC\Gen1
+
+[Standard.NTx86]
+%AskLinkVGC.DeviceDesc%=AskLinkVGC_Device, AskLink\AskLinkVGC\Gen1
+
+[Standard.NTARM64]
+%AskLinkVGC.DeviceDesc%=AskLinkVGC_Device, AskLink\AskLinkVGC\Gen1
+
+[AskLinkVGC_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+AskLinkVGC.sys
+
+;-------------- Service installation
+[AskLinkVGC_Device.NT.Services]
+AddService = AskLinkVGC,%SPSVCINST_ASSOCSERVICE%, AskLinkVGC_Service_Inst
+
+; -------------- AskLinkVGC driver install sections
+[AskLinkVGC_Service_Inst]
+DisplayName    = %AskLinkVGC.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 1               ; SERVICE_SYSTEM_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\AskLinkVGC.sys
+
+;
+;--- AskLinkVGC_Device Coinstaller installation ------
+;
+
+[AskLinkVGC_Device.NT.CoInstallers]
+AddReg=AskLinkVGC_Device_CoInstaller_AddReg
+CopyFiles=AskLinkVGC_Device_CoInstaller_CopyFiles
+
+[AskLinkVGC_Device_CoInstaller_AddReg]
+;
+
+
+[AskLinkVGC_Device_CoInstaller_CopyFiles]
+;
+
+
+[AskLinkVGC_Device.NT.Wdf]
+KmdfService =  AskLinkVGC, AskLinkVGC_wdfsect
+[AskLinkVGC_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="AskLink Technologies, Inc."
+DiskName = "AskLink VGC Installation Disk"
+AskLinkVGC.DeviceDesc = "AskLink Virtual Game Controller"
+AskLinkVGC.SVCDESC = "AskLink Virtual Game Controller Service"
+
+

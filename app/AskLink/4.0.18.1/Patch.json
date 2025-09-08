@@ -1,0 +1,46 @@
+{
+    "CmdKey": "",
+    "ExternalProgramPatchMode": 0,
+    "Minimize": 0,
+    "Patch": [
+        {
+            "Enable": 1,
+            "FeatureCode": "80 38 00 ? ? ? ? ? ? 49 8B D4 48 8D 4D F0",
+            "ModuleName": "AskLink.exe",
+            "NewCodes": "80 38 03",
+            "Offset": 0,
+            "ResultAddressOffset": 0,
+            "errorTip": "切换画质"
+        },
+        {
+            "Enable": 1,
+            "FeatureCode": "80 38 00 ? ? ? ? ? ? 48 8D ? ? ? ? ? 48 89 45 80",
+            "ModuleName": "AskLink.exe",
+            "NewCodes": "80 38 03",
+            "Offset": 0,
+            "ResultAddressOffset": 0,
+            "errorTip": "切换帧率"
+        },
+        {
+            "Enable": 1,
+            "FeatureCode": "41 80 BE ? ? ? ? 00 ? ? ? ? ? ? 49 8B 46 58",
+            "ModuleName": "AskLink.exe",
+            "NewCodes": "03",
+            "Offset": 7,
+            "ResultAddressOffset": 0,
+            "errorTip": "真彩模式"
+        },
+        {
+            "Enable": 1,
+            "FeatureCode": "80 3E 00 ? ? ? ? ? ? 48 8B 47 58 80 78 60 14 ? ? ? ? ? ? 48 8D 85 ? ? ? ? 48 89 45",
+            "ModuleName": "AskLink.exe",
+            "NewCodes": "80 3E 03",
+            "Offset": 0,
+            "ResultAddressOffset": 0,
+            "errorTip": "3D鼠标"
+        }
+    ],
+    "ProcessName": "AskLink.exe",
+    "ResetScan": 1,
+    "modifiedTime": -1688959155
+}

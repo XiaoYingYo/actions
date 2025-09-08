@@ -1,0 +1,11 @@
+[05:15:28.444][critical][ServiceTools]: ********************Create log success********************
+[05:15:28.833][critical][ServiceTools]: Try create local tcp server
+[05:15:28.834][critical][ServiceTools]: Local TCP listen
+[05:15:28.835][info][ServiceTools]: Create ui check proc thread
+[05:15:28.944][critical][ServiceTools]: ui link
+[05:15:28.945][info][ServiceTools]: Session Id -1
+[05:40:44.655][info][ServiceTools]: Destroy ui check proc thread
+[05:40:44.702][critical][ServiceTools]: Try exit
+[05:40:44.702][critical][ServiceTools]: Thread exit successful
+[05:40:44.802][critical][ServiceTools]: Tcp exit successful
+[05:40:44.802][critical][ServiceTools]: Exit success
