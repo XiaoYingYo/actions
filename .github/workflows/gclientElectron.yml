@@ -94,6 +94,7 @@ jobs:
         run: |
           git --version
           gcm git
+          Remove-Item "Git.exe"
         shell: powershell
 
       - name: 安装 Python 2.7.18
