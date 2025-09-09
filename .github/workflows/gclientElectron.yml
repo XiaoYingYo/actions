@@ -13,7 +13,7 @@ run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由
 
 jobs:
   test:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
       - name: 检出仓库
         run: |
@@ -65,7 +65,7 @@ jobs:
           Get-Content -Path "8080.log"
         working-directory: ./app
         shell: powershell
-      
+
       # - name: 删除文件减少备份数据量
       #   run: |
       #     rmdir /s /q "C:\Program Files\Microsoft Visual Studio"
