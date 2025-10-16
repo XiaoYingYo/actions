@@ -173,8 +173,7 @@ jobs:
 
       - name: 同步 gclient
         run: |
-          git config --system core.longpaths true
-          git config --global user.name "My Name" && git config --global user.email "my-name@chromium.org" && git config --global core.autocrlf false && git config --global core.filemode false && git config --global core.preloadindex true && git config --global core.fscache true && git config --global branch.autosetuprebase always && git config --global core.longpaths true && git config --global transfer.progress true && gclient sync --nohooks --with_branch_heads --with_tags -vv
+          git config --system core.longpaths true && git config --global user.name "My Name" && git config --global user.email "my-name@chromium.org" && git config --global core.autocrlf false && git config --global core.filemode false && git config --global core.preloadindex true && git config --global core.fscache true && git config --global branch.autosetuprebase always && git config --global core.longpaths true && git config --global transfer.progress true && gclient sync --nohooks --with_branch_heads --with_tags -vv
         continue-on-error: true
         shell: cmd
 
