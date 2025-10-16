@@ -109,6 +109,14 @@ jobs:
 
       - name: 更新 PATH for Python
         run: |
+          $currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+          $newPaths = @("C:\Python311", "C:\Python311\Scripts")
+          foreach ($path in $newPaths) {
+            if ($currentPath -notlike "*$path*") {
+              $currentPath = "$path;$currentPath"
+            }
+          }
+          [Environment]::SetEnvironmentVariable("Path", $currentPath, [EnvironmentVariableTarget]::Machine)
           echo "C:\Python311" >> $env:GITHUB_PATH
           echo "C:\Python311\Scripts" >> $env:GITHUB_PATH
         shell: powershell
@@ -126,7 +134,14 @@ jobs:
         shell: powershell
 
       - name: 更新 PATH for Node.js
-        run: echo "C:\Program Files\nodejs\" >> $env:GITHUB_PATH
+        run: |
+          $currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+          $nodePath = "C:\Program Files\nodejs"
+          if ($currentPath -notlike "*$nodePath*") {
+            $currentPath = "$nodePath;$currentPath"
+          }
+          [Environment]::SetEnvironmentVariable("Path", $currentPath, [EnvironmentVariableTarget]::Machine)
+          echo "C:\Program Files\nodejs\" >> $env:GITHUB_PATH
         shell: powershell
 
       - name: 验证 Node.js 版本
@@ -136,7 +151,14 @@ jobs:
         shell: powershell
 
       - name: 添加 depot_tools 到 PATH
-        run: echo "${{ github.workspace }}\depot_tools" >> $env:GITHUB_PATH
+        run: |
+          $currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+          $depotPath = "${{ github.workspace }}\depot_tools"
+          if ($currentPath -notlike "*$depotPath*") {
+            $currentPath = "$depotPath;$currentPath"
+          }
+          [Environment]::SetEnvironmentVariable("Path", $currentPath, [EnvironmentVariableTarget]::Machine)
+          echo "${{ github.workspace }}\depot_tools" >> $env:GITHUB_PATH
         shell: powershell
 
       - name: 设置环境变量
