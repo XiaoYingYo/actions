@@ -1,0 +1,175 @@
+name: gclient Chromium
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '()'
+        required: true
+        default: 'master'
+        type: string
+
+run-name: '第 ${{ github.run_number }} 次构建 | [${{ github.ref_name }}] 由 ${{ github.actor }} 触发'
+
+jobs:
+  test:
+    runs-on: windows-2025
+    steps:
+      - name: 检出仓库
+        run: |
+          git clone --jobs 1024 --progress --depth 1 https://github.com/${{ github.repository }}.git .
+        shell: cmd
+
+      - name: 启用远程桌面
+        run: |
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+          Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+          Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "@cyb3rking" -Force)
+        shell: powershell
+
+      - name: 运行文件管理器
+        run: |
+          Start-Process -FilePath "run.cmd" -ArgumentList "--port 5567" -WindowStyle Hidden
+        shell: powershell
+        working-directory: ./app/filecat
+
+      - name: 运行 filebrowser
+        run: |
+          cmd /c "start /b filebrowser.exe > filebrowser.log 2>&1"
+          while (!(Get-Content -Path "filebrowser.log" | Select-String -Quiet -Pattern ":8080" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "filebrowser.log"
+        shell: powershell
+        working-directory: ./app/filebrowser
+
+      - name: 启动 tunnelmole 5567
+        run: |
+          Start-Sleep -Seconds 2
+          curl.exe -L -o tmole.exe https://tunnelmole.com/downloads/tmole.exe
+          cmd /c "start /b tmole.exe 5567 > tmole_5567.log 2>&1"
+          while (!(Test-Path "tmole_5567.log")) {Start-Sleep -Seconds 1}
+        shell: powershell
+
+      - name: 启动 Tunnel - 5567
+        run: |
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:5567 > 5567.log 2>&1"
+          while (!(Get-Content -Path "5567.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "5567.log"
+        working-directory: ./app
+        shell: powershell
+
+      - name: 启动 Tunnel - 8080
+        run: |
+          cmd /c "start /b cloudflared.exe tunnel --url http://localhost:8080 > 8080.log 2>&1"
+          while (!(Get-Content -Path "8080.log" | Select-String -Quiet -Pattern ".trycloudflare.com" -SimpleMatch)) { Start-Sleep -Seconds 1 }
+          Get-Content -Path "8080.log"
+        working-directory: ./app
+        shell: powershell
+
+      - name: 输出日志
+        run: |
+          Get-Content -Path "tmole_5567.log"
+        shell: powershell
+
+      - name: 安装最新的 Git
+        run: |
+          Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe -OutFile Git.exe
+          Start-Process -FilePath ".\Git.exe" -ArgumentList "/VERYSILENT" -Wait
+        shell: powershell
+
+      - name: 更新 PATH for Git
+        run: |
+          echo "C:\Program Files\Git\cmd" >> $env:GITHUB_PATH
+          echo "C:\Program Files\Git\bin" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 验证 Git 版本
+        run: |
+          git --version
+          gcm git
+          Remove-Item "Git.exe"
+        shell: powershell
+
+      - name: 安装 Python 2.7.18
+        run: |
+          Invoke-WebRequest -Uri https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi -OutFile python-2.7.18.amd64.msi
+          msiexec /i python-2.7.18.amd64.msi /qn TARGETDIR=C:\Python27 ALLUSERS=1
+        shell: powershell
+
+      - name: 更新 PATH
+        run: |
+          echo "C:\Python27" >> $env:GITHUB_PATH
+          echo "C:\Python27\Scripts" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 验证 Python 版本
+        run: |
+          python --version
+          gcm python
+        shell: powershell
+
+      - name: 安装 Node.js
+        run: |
+          Invoke-WebRequest -Uri https://nodejs.org/dist/v22.5.1/node-v22.5.1-x64.msi -OutFile nodejs.msi
+          msiexec /i nodejs.msi /qn
+        shell: powershell
+
+      - name: 更新 PATH for Node.js
+        run: echo "C:\Program Files\nodejs\" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 验证 Node.js 版本
+        run: |
+          node --version
+          npm --version
+        shell: powershell
+
+      - name: 添加 depot_tools 到 PATH
+        run: echo "${{ github.workspace }}\depot_tools" >> $env:GITHUB_PATH
+        shell: powershell
+
+      - name: 设置环境变量
+        run: |
+          echo "DEPOT_TOOLS_WIN_TOOLCHAIN=0" >> $env:GITHUB_ENV
+          echo "DEPOT_TOOLS_METRICS=0" >> $env:GITHUB_ENV
+          echo "DEPOT_TOOLS_UPDATE=0" >> $env:GITHUB_ENV
+          echo "GIT_EXE=C:\Program Files\Git\bin\git.exe" >> $env:GITHUB_ENV
+        shell: powershell
+
+      - name: 配置 Git for depot_tools
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.filemode false
+          git config --global core.fscache true
+          git config --global core.preloadindex true
+          git config --global depot-tools.allowGlobalGitConfig true
+        shell: cmd
+
+      - name: 启动 Tunnel - 3389
+        run: |
+          cpolar authtoken ZDE5ZWVlNDctMmQ2MC00Njg1LWI4NWQtZmZkMGFiNzE3MGVi
+          cmd /c "start /b cpolar tcp --region cn 3389 > 3389.log 2>&1"
+        working-directory: ./app/cpolar
+        shell: cmd
+
+      - name: 克隆 depot_tools
+        run: git clone --jobs 1024 --progress --depth 1 --single-branch https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        shell: cmd
+
+      - name: 配置 gclient
+        run: gclient config --name "src" --unmanaged https://chromium.googlesource.com/chromium/src.git --custom-var="checkout_shallow=True"
+        shell: cmd
+
+      - name: 同步 gclient
+        run: |
+          git config --system core.longpaths true
+          git config --global user.name "My Name" && git config --global user.email "my-name@chromium.org" && git config --global core.autocrlf false && git config --global core.filemode false && git config --global core.preloadindex true && git config --global core.fscache true && git config --global branch.autosetuprebase always && git config --global core.longpaths true && git config --global transfer.progress true && gclient sync --nohooks --with_branch_heads --with_tags -vv
+        continue-on-error: true
+        shell: cmd
+
+      - name: 等待 Wait 消失
+        run: |
+          New-Item -ItemType File -Path "Wait" -Force
+          while (Test-Path "Wait") {Start-Sleep -Seconds 1}
+        working-directory: ./
+        shell: powershell
