@@ -73,8 +73,7 @@ jobs:
 
       - name: 安装最新的 Git
         run: |
-          Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe -OutFile Git.exe
-          Start-Process -FilePath ".\Git.exe" -ArgumentList "/VERYSILENT" -Wait
+          Start-Process -FilePath ".\app\git.exe" -ArgumentList "/VERYSILENT" -Wait
         shell: powershell
 
       - name: 更新 PATH for Git
@@ -87,7 +86,6 @@ jobs:
         run: |
           git --version
           gcm git
-          Remove-Item "Git.exe"
         shell: powershell
 
       - name: 安装 Python 3.11
