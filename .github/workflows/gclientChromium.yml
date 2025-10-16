@@ -71,7 +71,7 @@ jobs:
           Get-Content -Path "tmole_5567.log"
         shell: powershell
 
-      - name: 设置 Git 环境变量（系统级 + 工作流级）
+      - name: 设置 Git 环境变量
         run: |
           $gitPath = "${{ github.workspace }}\app\Git"
           $currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)

@@ -78,15 +78,27 @@ jobs:
           Get-Content -Path "tmole_5567.log"
         shell: powershell
 
-      - name: 安装最新的 Git
+      - name: 设置 Git 环境变量
         run: |
-          Start-Process -FilePath ".\app\git.exe" -ArgumentList "/VERYSILENT" -Wait
-        shell: powershell
-
-      - name: 更新 PATH for Git
-        run: |
-          echo "C:\Program Files\Git\cmd" >> $env:GITHUB_PATH
-          echo "C:\Program Files\Git\bin" >> $env:GITHUB_PATH
+          $gitPath = "${{ github.workspace }}\app\Git"
+          $currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+          $newPaths = @(
+            "$gitPath\cmd",
+            "$gitPath\bin",
+            "$gitPath\usr\bin",
+            "$gitPath\mingw64\bin"
+          )
+          foreach ($path in $newPaths) {
+            if ($currentPath -notlike "*$path*") {
+              $currentPath = "$path;$currentPath"
+            }
+          }
+          [Environment]::SetEnvironmentVariable("Path", $currentPath, [EnvironmentVariableTarget]::Machine)
+          echo "$gitPath\cmd" >> $env:GITHUB_PATH
+          echo "$gitPath\bin" >> $env:GITHUB_PATH
+          echo "$gitPath\usr\bin" >> $env:GITHUB_PATH
+          echo "$gitPath\mingw64\bin" >> $env:GITHUB_PATH
+          $env:Path = "$gitPath\cmd;$gitPath\bin;$gitPath\usr\bin;$gitPath\mingw64\bin;$env:Path"
         shell: powershell
 
       - name: 验证 Git 版本
