@@ -90,16 +90,17 @@ jobs:
           Remove-Item "Git.exe"
         shell: powershell
 
-      - name: 安装 Python 2.7.18
+      - name: 安装 Python 3.11
         run: |
-          Invoke-WebRequest -Uri https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi -OutFile python-2.7.18.amd64.msi
-          msiexec /i python-2.7.18.amd64.msi /qn TARGETDIR=C:\Python27 ALLUSERS=1
+          Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe -OutFile python-3.11.9-amd64.exe
+          Start-Process -FilePath ".\python-3.11.9-amd64.exe" -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1 TargetDir=C:\Python311" -Wait
+          Remove-Item "python-3.11.9-amd64.exe"
         shell: powershell
 
-      - name: 更新 PATH
+      - name: 更新 PATH for Python
         run: |
-          echo "C:\Python27" >> $env:GITHUB_PATH
-          echo "C:\Python27\Scripts" >> $env:GITHUB_PATH
+          echo "C:\Python311" >> $env:GITHUB_PATH
+          echo "C:\Python311\Scripts" >> $env:GITHUB_PATH
         shell: powershell
 
       - name: 验证 Python 版本
