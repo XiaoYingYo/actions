@@ -74,8 +74,6 @@ jobs:
       - name: 设置 Git 环境变量（系统级 + 工作流级）
         run: |
           $gitPath = "${{ github.workspace }}\app\Git"
-          
-          # 1. 设置系统环境变量（永久生效）
           $currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
           $newPaths = @(
             "$gitPath\cmd",
@@ -83,22 +81,16 @@ jobs:
             "$gitPath\usr\bin",
             "$gitPath\mingw64\bin"
           )
-          
           foreach ($path in $newPaths) {
             if ($currentPath -notlike "*$path*") {
               $currentPath = "$path;$currentPath"
             }
           }
-          
           [Environment]::SetEnvironmentVariable("Path", $currentPath, [EnvironmentVariableTarget]::Machine)
-          
-          # 2. 同时设置工作流环境变量（立即生效）
           echo "$gitPath\cmd" >> $env:GITHUB_PATH
           echo "$gitPath\bin" >> $env:GITHUB_PATH
           echo "$gitPath\usr\bin" >> $env:GITHUB_PATH
           echo "$gitPath\mingw64\bin" >> $env:GITHUB_PATH
-          
-          # 3. 刷新当前会话的环境变量
           $env:Path = "$gitPath\cmd;$gitPath\bin;$gitPath\usr\bin;$gitPath\mingw64\bin;$env:Path"
         shell: powershell
 
